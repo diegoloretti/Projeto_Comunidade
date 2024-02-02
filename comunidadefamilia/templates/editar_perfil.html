@@ -1,0 +1,79 @@
+{% extends "perfil.html" %}
+
+{% block form_editar_perfil %}
+
+<div class="container">
+    <hr>
+                <div class="row">          
+                    <div class="col">
+                        <form method="POST" class="border p-4 mt-2" enctype="multipart/form-data" novalidate>
+                            {{ form.csrf_token }}
+                            <legend>Perfil</legend>
+                            <fieldset>
+                                <div class="form-group">
+                                    {{ form.username.label(class='form-control-label') }}
+                                    {% if form.username.errors and form.botao_submit_criarconta.data%}
+                                    {{ form.username(class='form-control is-invalid') }}
+                                    <div class="invalid-feedback">
+                                    {% for error in form.username.errors %}
+                                        {{ error }}
+                                    {% endfor %}
+                                    </div>
+                                {% else %}
+                                    {{ form.username(class='form-control') }}
+                                {% endif %}
+                                </div>
+                                <div class="form-group">
+                                    {{ form.email.label(class='form-control-label') }}
+                                    {% if form.email.errors and form.botao_submit_criarconta.data%}
+                                    {{ form.email(class='form-control is-invalid') }}
+                                    <div class="invalid-feedback">
+                                    {% for error in form.email.errors %}
+                                        {{ error }}
+                                    {% endfor %}
+                                    </div>
+                                {% else %}
+                                    {{ form.email(class='form-control') }}
+                                {% endif %}
+                                </div>                                
+                                <div class="form-group">
+                                    {{ form.sexo.label(class='form-control-label') }}
+                                    {% if form.sexo.errors and form.botao_submit_criarconta.data%}
+                                    {{ form.sexo(class='form-select is-invalid custom_select') }}
+                                    <div class="invalid-feedback">
+                                    {% for error in form.sexo.errors %}
+                                        {{ error }}
+                                    {% endfor %}
+                                    </div>
+                                {% else %}
+                                    {{ form.sexo(class='form-select') }}
+                                {% endif %}
+                                </div>
+                                <div class="form-group mt-3">
+                                    {{ form.foto_perfil.label }}
+                                    {{ form.foto_perfil(class='form-control-file') }}
+                                    {% if form.foto_perfil.errors %}
+                                    {% for error in form.foto_perfil.errors %}
+                                        <span class="text-danger">{{ error }}</span> <br>
+                                    {% endfor %}
+                                    {% endif %}                                    
+                                </div>   
+                                <hr>
+                                <p>Atributos</p>
+                                {% for field in form %}
+                                    {%if 'atrib_' in field.name %}
+                                        <div class="form-group">
+                                            {{ field(class='form-check-input') }}
+                                            {{ field.label(class='form-check-label') }}
+                                        </div>
+                                    {% endif %}
+                                {% endfor %}                                                           
+                            </fieldset>
+                            {{ form.botao_submit_editarperfil(class='btn btn-primary mt-3') }}
+                        </form>
+                    </div>
+                </div>
+    
+</div>
+
+{% endblock %}

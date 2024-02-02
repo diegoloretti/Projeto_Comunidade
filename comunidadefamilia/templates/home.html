@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block body %}  
+    <div class="container mt-3">
+                <h1>Comunidade da Família</h1>
+                <h3>Fofocas da família abaixo</h3>
+                <hr>
+                {% for post in posts %}
+                <div class="row border mt-4 meupost">
+                    <div class="col-lg-2 col-md-4 col-sm-6">
+                        <p>{{ post.autor.username }}</p>
+                        <img src="{{ url_for('static', filename='fotos_perfil/{}'.format(post.autor.foto_perfil)) }}" class="rounded" height="100" >
+                        <div class="col text-center">
+                            {% for atributo in post.autor.atributos.split(';') %}
+                            <button type="button" class="btn btn-success custom-small-btn mt-2" disabled>{{ atributo }}</button>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    <div class="col-lg-9 col-md-8 col-sm-6">
+                        <div class="text-start">
+                                <a class="text-decoration-none" href="{{url_for('exibir_post', post_id=post.id)}}"><h3>{{ post.titulo }}</h3></a>
+                                <p class="fs-6 text-muted fw-medium">{{ post.data_postagem.strftime("%d/%m/%Y") }}</p>
+                                <p class="fs-6 text-wrap text-break">{{ post.conteudo | replace('\n', '<br>') | safe }}</p>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            
+    </div>
+{% endblock %}
